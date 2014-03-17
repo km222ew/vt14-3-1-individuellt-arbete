@@ -17,5 +17,7 @@ namespace MovieCollection.Model
         [Required(ErrorMessage = "A lastname must be assigned.")]
         [StringLength(40, ErrorMessage = "The lastname can not have more than 40 characters.")]
         public string Lastname { get; set; }
+
+        public string FullName { get; set; }
     }
 }

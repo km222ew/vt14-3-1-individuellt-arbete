@@ -14,6 +14,6 @@ namespace MovieCollection.Model
 
         [Required(ErrorMessage = "A role must be assigned.")]
         [StringLength(60, ErrorMessage = "The role can not have more than 60 characters.")]
-        public string Role { get; set; }
+        public string MovieRole { get; set; }
     }
 }
