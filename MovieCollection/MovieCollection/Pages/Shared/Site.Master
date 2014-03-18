@@ -4,17 +4,42 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>Movie-Collection</title>
+    <link href="~/Content/Style.css" rel="stylesheet" type="text/css" />
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
-    <form id="form1" runat="server">
-    <div>
-        <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
+    <div id="container">
+        <header id="header">
+            <div id="title">
+                <h1 class="h1">Movie-collection</h1>
+            </div>
+            <div id="nav">
+                <ul>               
+                    <li id="Index" runat="server">
+                        <asp:HyperLink ID="IndexHyperLink" runat="server" NavigateUrl='<%$ RouteUrl:routename=Index %>'>Home</asp:HyperLink>
+                    </li>
+                    <li id="Movies" runat="server">
+                        <asp:HyperLink ID="MoviesHyperLink" runat="server" NavigateUrl='<%$ RouteUrl:routename=Movies %>'>Movies</asp:HyperLink>
+                    </li>
+                    <li id="AddMovie" runat="server">
+                        <asp:HyperLink ID="AddMovieHyperLink" runat="server" NavigateUrl='<%$ RouteUrl:routename=MovieCreate %>'>Add movie</asp:HyperLink>
+                    </li>
+                </ul>
+            </div>
+
+        </header>
         
-        </asp:ContentPlaceHolder>
+        <form id="form" runat="server">
+        
+            
+            <div>
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
+        
+                </asp:ContentPlaceHolder>
+            </div>
+        </form>
     </div>
-    </form>
 </body>
 </html>

@@ -7,8 +7,15 @@ using System.Web;
 
 namespace MovieCollection.Model.DAL
 {
+    /// <summary>
+    /// (C)R(UD)-funktionalitet mot tabellen Person
+    /// </summary>
     public class PersonDAL : DALBase
     {
+        /// <summary>
+        /// Hämtar alla personer i tabellen
+        /// </summary>
+        /// <returns>En lista med personer</returns>
         public IEnumerable<Person> GetPersons()
         {
             using (var conn = CreateConnection())

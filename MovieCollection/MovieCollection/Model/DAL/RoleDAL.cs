@@ -7,8 +7,15 @@ using System.Web;
 
 namespace MovieCollection.Model.DAL
 {
+    /// <summary>
+    /// CRUD-funktionalitet mot tabellen Role
+    /// </summary>
     public class RoleDAL : DALBase
     {
+        /// <summary>
+        /// Hämtar alla roller till en film beroende på "movieID"
+        /// </summary>
+        /// <returns>En lista med roller</returns>
         public List<Role> GetRolesByMovieID(int movieID)
         {
             using (var conn = CreateConnection())
@@ -55,6 +62,10 @@ namespace MovieCollection.Model.DAL
             }
         }
 
+        /// <summary>
+        /// Hämtar en roll beroende på "roleID"
+        /// </summary>
+        /// <returns>En roll</returns>
         public Role GetRole(int roleID)
         {
             using (var conn = CreateConnection())
@@ -96,6 +107,9 @@ namespace MovieCollection.Model.DAL
             }
         }
 
+        /// <summary>
+        /// Lägger till en roll för en film
+        /// </summary>
         public void InsertRole(Role role)
         {
             using (var conn = CreateConnection())
@@ -109,6 +123,7 @@ namespace MovieCollection.Model.DAL
                     cmd.Parameters.Add("@Role", SqlDbType.VarChar, 60).Value = role.MovieRole;
                     cmd.Parameters.Add("@PersID", SqlDbType.Int, 4).Value = role.PersID;
 
+                    //Hämtar det nya id:t som skapats efter proceduren har körts
                     cmd.Parameters.Add("@RoleID", SqlDbType.Int, 4).Direction = ParameterDirection.Output;
 
                     conn.Open();
@@ -126,6 +141,9 @@ namespace MovieCollection.Model.DAL
             }
         }
 
+        /// <summary>
+        /// Uppdaterar en roll
+        /// </summary>
         public void UpdateRole(Role role)
         {
             using (var conn = CreateConnection())
@@ -151,6 +169,9 @@ namespace MovieCollection.Model.DAL
             }
         }
 
+        /// <summary>
+        /// Tar bort en roll beroende på "roleID"
+        /// </summary>
         public void DeleteRole(int roleID)
         {
             using (var conn = CreateConnection())

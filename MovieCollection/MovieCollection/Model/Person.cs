@@ -6,6 +6,9 @@ using System.Web;
 
 namespace MovieCollection.Model
 {
+    /// <summary>
+    /// Klass för hantering av personer.
+    /// </summary>
     public class Person
     {
         public int PersID { get; set; }

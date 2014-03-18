@@ -10,34 +10,7 @@
 namespace MovieCollection.Pages.MoviePages {
     
     
-    public partial class Details {
-        
-        /// <summary>
-        /// successPanel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel successPanel;
-        
-        /// <summary>
-        /// successLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label successLabel;
-        
-        /// <summary>
-        /// closeMessage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton closeMessage;
+    public partial class Create {
         
         /// <summary>
         /// ValidationSummary1 control.

@@ -10,7 +10,7 @@
 namespace MovieCollection.Pages.MoviePages {
     
     
-    public partial class Listing {
+    public partial class Edit {
         
         /// <summary>
         /// successPanel control.
@@ -40,21 +40,12 @@ namespace MovieCollection.Pages.MoviePages {
         protected global::System.Web.UI.WebControls.ImageButton closeMessage;
         
         /// <summary>
-        /// ValidationSummary1 control.
+        /// MovieFormView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary1;
-        
-        /// <summary>
-        /// MovieListView control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView MovieListView;
+        protected global::System.Web.UI.WebControls.FormView MovieFormView;
     }
 }

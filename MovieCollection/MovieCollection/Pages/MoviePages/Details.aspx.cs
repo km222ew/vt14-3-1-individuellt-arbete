@@ -34,9 +34,20 @@ namespace MovieCollection.Pages.MoviePages
             }
         }
 
+        private string MessageStatus
+        {
+            get { return Session["MessageStatus"] as string; }
+            set { Session["MessageStatus"] = value; }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (MessageStatus != null)
+            {
+                successPanel.Visible = true;
+                successLabel.Text = MessageStatus;
+                Session.Clear();
+            }
         }
 
         public Movie MovieFormView_GetItem()
@@ -46,37 +57,10 @@ namespace MovieCollection.Pages.MoviePages
                 return Service.GetMovie(GetMovieID);
             }
             catch (Exception)
-            {
-                
+            {               
                 Page.ModelState.AddModelError(String.Empty, "An error occured when trying to obtain the movie.");
                 return null;
             }
-        }
-
-        public void MovieFormView_UpdateItem(int MovieID)
-        {
-            try
-            {
-                var movie = Service.GetMovie(MovieID);
-                if (movie == null)
-                {
-                    Page.ModelState.AddModelError(String.Empty, 
-                        String.Format("Movie with id {0} was not found", MovieID));
-                    return;
-                }
-
-                if (TryUpdateModel(movie))
-                {
-                    Service.UpdateMovie(movie);
-
-                    Response.RedirectToRoute("MovieDetails", new { id = movie.MovieID });
-                    Context.ApplicationInstance.CompleteRequest();
-                }
-            }
-            catch (Exception)
-            {
-                Page.ModelState.AddModelError(String.Empty, "An error occured when trying to update the movie.");
-            }            
         }
 
         public void MovieFormView_DeleteItem(int MovieID)
@@ -84,6 +68,10 @@ namespace MovieCollection.Pages.MoviePages
             try
             {
                 Service.DeleteMovie(MovieID);
+
+                MessageStatus = "The movie was deleted successfully.";
+                Response.RedirectToRoute("Movies");
+                Context.ApplicationInstance.CompleteRequest();
             }
             catch (Exception)
             {
@@ -94,67 +82,6 @@ namespace MovieCollection.Pages.MoviePages
         public IEnumerable<Role> RoleListView_GetData()
         {
             return Service.GetRolesByMovieID(GetMovieID);
-        }
-
-        public void RoleListView_UpdateItem(int RoleID)
-        {
-            try
-            {
-                var role = Service.GetRole(RoleID);
-                if (role == null)
-                {
-                    Page.ModelState.AddModelError(String.Empty, 
-                        String.Format("Role with id {0} was not found", RoleID));
-                    return;
-                }
-
-                if (TryUpdateModel(role))
-                {
-                    Service.SaveRole(role);
-
-                    Response.RedirectToRoute("MovieDetails", new { id = role.MovieID });
-                    Context.ApplicationInstance.CompleteRequest();
-                }
-            }
-            catch (Exception)
-            {
-                Page.ModelState.AddModelError(String.Empty, "An error occured when trying to update the role.");
-            }
-        }
-
-        public void RoleListView_DeleteItem(int RoleID)
-        {
-            try
-            {
-                Service.DeleteRole(RoleID);
-
-                Response.RedirectToRoute("MovieDetails", new { id = GetMovieID });
-                Context.ApplicationInstance.CompleteRequest();
-            }
-            catch (Exception)
-            {
-                ModelState.AddModelError(String.Empty, "An error occured when trying to delete a role.");
-            }
-            
-        }
-
-        public void RoleListView_InsertItem(Role role)
-        {
-            if (Page.ModelState.IsValid)
-            {
-                try
-                {
-                    role.MovieID = GetMovieID;
-                    Service.SaveRole(role);
-
-                    Response.RedirectToRoute("MovieDetails", new { id = GetMovieID });
-                    Context.ApplicationInstance.CompleteRequest();
-                }
-                catch (Exception)
-                {
-                    ModelState.AddModelError(String.Empty, "An error occured when trying to add a role.");
-                }
-            }
         }
 
         protected void RoleListView_ItemDataBound(object sender, ListViewItemEventArgs e)
@@ -168,11 +95,6 @@ namespace MovieCollection.Pages.MoviePages
 
                 label.Text = String.Format(label.Text, person.FullName);
             }
-        }
-
-        public IEnumerable<Person> PersonDropDownList_GetData()
-        {
-            return Service.GetPersons();
         }
     }
 }

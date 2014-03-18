@@ -17,9 +17,20 @@ namespace MovieCollection.Pages.MoviePages
             get { return _service ?? (_service = new Service()); }
         }
 
+        private string MessageStatus
+        {
+            get { return Session["MessageStatus"] as string; }
+            set { Session["MessageStatus"] = value; }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (MessageStatus != null)
+            {
+                successPanel.Visible = true;
+                successLabel.Text = MessageStatus;
+                Session.Clear();
+            }
         }
 
         public IEnumerable<Movie> MovieListView_GetDataPageWise(int maximumRows, int startRowIndex, out int totalRowCount)
@@ -31,7 +42,11 @@ namespace MovieCollection.Pages.MoviePages
         {
             try
             {
-                Service.DeleteMovie(MovieID);               
+                Service.DeleteMovie(MovieID);
+
+                MessageStatus = "The movie was deleted successfully.";
+                Response.RedirectToRoute("Movies");
+                Context.ApplicationInstance.CompleteRequest();
             }
             catch (Exception)
             {
