@@ -83,17 +83,6 @@
                                     <%#: Item.MovieRole %>
                                 </td>
                             </tr>
-
-                            <%--<li class="li_width">
-                                <div class="inline">
-                                    <asp:Label ID="PersonLabel" runat="server" Text="{0} " />
-                                </div>
-                                <div class="inline">...</div>
-                                <div class="inline">
-                                    <asp:Label ID="Label1" runat="server" Text="<%#: Item.MovieRole %>"></asp:Label>
-                                </div>
-                            
-                            </li>--%>
                         </ItemTemplate>
                     </asp:ListView>
                 </fieldset>

@@ -1,0 +1,13 @@
+﻿body {
+}
+#form {
+    border:none;
+    color:black;
+}
+a {
+    display:none;
+}
+#header, #nav, .detailsButtons
+{
+    display: none;
+}

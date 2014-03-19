@@ -57,6 +57,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Print.css" />
     <Content Include="Content\Style.css" />
     <Content Include="Global.asax" />
     <Content Include="Pages\MoviePages\Create.aspx" />

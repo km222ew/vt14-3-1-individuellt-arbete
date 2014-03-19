@@ -12,11 +12,13 @@ namespace MovieCollection.Pages.MoviePages
     {
         private Service _service;
 
+        //Skapar ett service-objekt när det behövs
         private Service Service
         {
             get { return _service ?? (_service = new Service()); }
         }
 
+        //Hämtar rätt "MovieID" från url:en
         public int GetMovieID
         {
             get
@@ -34,6 +36,7 @@ namespace MovieCollection.Pages.MoviePages
             }
         }
 
+        //Inkapslad session för (rätt)meddelande
         private string MessageStatus
         {
             get { return Session["MessageStatus"] as string; }
@@ -42,6 +45,7 @@ namespace MovieCollection.Pages.MoviePages
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            //Kollar om sessionen inte är null, visar i så fall en label med rättmeddelandet som text och tömmer sessionen
             if (MessageStatus != null)
             {
                 successPanel.Visible = true;
@@ -50,6 +54,7 @@ namespace MovieCollection.Pages.MoviePages
             }
         }
 
+        //Hämtar filmen som ska uppdateras
         public Movie MovieFormView_GetItem()
         {
             try
@@ -63,6 +68,7 @@ namespace MovieCollection.Pages.MoviePages
             }
         }
 
+        //Uppdaterar filmen
         public void MovieFormView_UpdateItem(int MovieID)
         {
             try
@@ -79,7 +85,9 @@ namespace MovieCollection.Pages.MoviePages
                 {
                     Service.UpdateMovie(movie);
 
+                    //Rättmeddelande
                     MessageStatus = "The movie was updated successfully.";
+
                     Response.RedirectToRoute("MovieDetails", new { id = movie.MovieID });
                     Context.ApplicationInstance.CompleteRequest();
                 }
@@ -90,6 +98,7 @@ namespace MovieCollection.Pages.MoviePages
             }
         }
 
+        //Hämtar alla roller för filmen
         public IEnumerable<Role> RoleListView_GetData()
         {
             try
@@ -104,6 +113,7 @@ namespace MovieCollection.Pages.MoviePages
             
         }
 
+        //Uppdaterar en roll
         public void RoleListView_UpdateItem(int RoleID)
         {
             try
@@ -120,7 +130,9 @@ namespace MovieCollection.Pages.MoviePages
                 {
                     Service.SaveRole(role);
 
+                    //Rättmeddelande
                     MessageStatus = "The role was updated successfully.";
+
                     Response.RedirectToRoute("MovieEdit", new { id = role.MovieID });
                     Context.ApplicationInstance.CompleteRequest();
                 }
@@ -131,13 +143,16 @@ namespace MovieCollection.Pages.MoviePages
             }
         }
 
+        //Tar bort en roll
         public void RoleListView_DeleteItem(int RoleID)
         {
             try
             {
                 Service.DeleteRole(RoleID);
 
+                //Rättmeddelande
                 MessageStatus = "The role was deleted successfully.";
+
                 Response.RedirectToRoute("MovieEdit", new { id = GetMovieID });
                 Context.ApplicationInstance.CompleteRequest();
             }
@@ -148,6 +163,7 @@ namespace MovieCollection.Pages.MoviePages
 
         }
 
+        //Lägger till en ny roll
         public void RoleListView_InsertItem(Role role)
         {
             if (Page.ModelState.IsValid)
@@ -157,7 +173,9 @@ namespace MovieCollection.Pages.MoviePages
                     role.MovieID = GetMovieID;
                     Service.SaveRole(role);
 
+                    //Rättmeddelande
                     MessageStatus = "The role was added successfully.";
+
                     Response.RedirectToRoute("MovieEdit", new { id = GetMovieID });
                     Context.ApplicationInstance.CompleteRequest();
                 }
@@ -168,19 +186,7 @@ namespace MovieCollection.Pages.MoviePages
             }
         }
 
-        //protected void RoleListView_ItemDataBound(object sender, ListViewItemEventArgs e)
-        //{
-        //    var label = e.Item.FindControl("PersonLabel") as Label;
-        //    if (label != null)
-        //    {
-        //        var role = (Role)e.Item.DataItem;
-
-        //        var person = Service.GetPersons().Single(pers => pers.PersID == role.PersID);
-
-        //        label.Text = String.Format(label.Text, person.FullName);
-        //    }
-        //}
-
+        //Hämtar alla personerna och lägger dem i dropdown-listan
         public IEnumerable<Person> PersonDropDownList_GetData()
         {
             try

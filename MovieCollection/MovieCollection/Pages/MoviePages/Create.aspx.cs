@@ -12,11 +12,13 @@ namespace MovieCollection.Pages.MoviePages
     {
         private Service _service;
 
+        //Skapar ett service-objekt när det behövs
         private Service Service
         {
             get { return _service ?? (_service = new Service()); }
         }
 
+        //Inkapslad session för (rätt)meddelande
         private string MessageStatus
         {
             get { return Session["MessageStatus"] as string; }
@@ -28,6 +30,7 @@ namespace MovieCollection.Pages.MoviePages
             
         }
 
+        //Lägger till en film med en roll
         public void MovieFormView_InsertItem(Movie movie, Role role)
         {
             if (Page.ModelState.IsValid)
@@ -47,9 +50,18 @@ namespace MovieCollection.Pages.MoviePages
             }
         }
 
+        //Hämtar 
         public IEnumerable<Person> PersonDropDownList_GetData()
         {
-            return Service.GetPersons();
+            try
+            {
+                return Service.GetPersons();
+            }
+            catch (Exception)
+            {
+                Page.ModelState.AddModelError(String.Empty, "An error occured when trying to obtain a list of persons.");
+                return null;
+            }
         }
     }
 }

@@ -12,11 +12,13 @@ namespace MovieCollection.Pages.MoviePages
     {
         private Service _service;
 
+        //Skapar ett service-objekt när det behövs
         private Service Service
         {
             get { return _service ?? (_service = new Service()); }
         }
 
+        //Hämtar rätt "MovieID" från url:en
         public int GetMovieID
         {
             get 
@@ -34,6 +36,7 @@ namespace MovieCollection.Pages.MoviePages
             }
         }
 
+        //Inkapslad session för (rätt)meddelande
         private string MessageStatus
         {
             get { return Session["MessageStatus"] as string; }
@@ -42,6 +45,7 @@ namespace MovieCollection.Pages.MoviePages
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            //Kollar om sessionen inte är null, visar i så fall en label med rättmeddelandet som text och tömmer sessionen
             if (MessageStatus != null)
             {
                 successPanel.Visible = true;
@@ -50,6 +54,7 @@ namespace MovieCollection.Pages.MoviePages
             }
         }
 
+        //Hämtar filmen som ska visas
         public Movie MovieFormView_GetItem()
         {
             try
@@ -63,13 +68,16 @@ namespace MovieCollection.Pages.MoviePages
             }
         }
 
+        //Tar bort filmen som visas
         public void MovieFormView_DeleteItem(int MovieID)
         {
             try
             {
                 Service.DeleteMovie(MovieID);
 
+                //Rättmeddelande
                 MessageStatus = "The movie was deleted successfully.";
+
                 Response.RedirectToRoute("Movies");
                 Context.ApplicationInstance.CompleteRequest();
             }
@@ -79,11 +87,21 @@ namespace MovieCollection.Pages.MoviePages
             }
         }
 
+        //Hämtar alla roller för en film
         public IEnumerable<Role> RoleListView_GetData()
         {
-            return Service.GetRolesByMovieID(GetMovieID);
+            try
+            {
+                return Service.GetRolesByMovieID(GetMovieID);
+            }
+            catch (Exception)
+            {
+                Page.ModelState.AddModelError(String.Empty, "An error occured when trying to obtain a movies roles.");
+                return null;
+            }
         }
 
+        //Används för att få ut rollens ID för att kunna visa ett cachat person-objekt
         protected void RoleListView_ItemDataBound(object sender, ListViewItemEventArgs e)
         {
             var label = e.Item.FindControl("PersonLabel") as Label;

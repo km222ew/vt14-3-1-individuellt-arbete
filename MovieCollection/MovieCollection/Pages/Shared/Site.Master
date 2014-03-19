@@ -6,6 +6,7 @@
 <head runat="server">
     <title>Movie-Collection</title>
     <link href="~/Content/Style.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/print.css" rel="stylesheet" type="text/css" media="print" />
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
